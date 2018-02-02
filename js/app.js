@@ -12,4 +12,10 @@ function initMap() {
         map: map,
         title: 'First Marker!'
     });
+    var infowindow = new google.maps.InfoWindow({
+        content: 'Do you ever feel like infowindow'
+    });
+    marker.addListener('click',function(){
+        infowindow.open(map,marker);
+    });
 }
