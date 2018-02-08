@@ -4,27 +4,29 @@
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <!-- Bootstrap -->
-<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-     <!-- CSS -->
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
      <link rel="stylesheet" href="css/styles.css">
 
  </head>
  <body>
-<!-- <nav class="navbar navbar-default">
+ <nav class="navbar navbar-default">
      <div class="container-fluid">
-         <div class="navbar-header">
+         <div class ="row">
+             <div class="col-xs-12">
+                 <div class="navbar-header">
              <div class="navbar-brand">
-                 <span class="nav-title">Map</span>
+                 <div class="nav-title">Fav Restaurants</div>
              </div>
          </div>
-
+             </div>
+         </div>
          <form class="navbar-form navbar-left" role="search">
              <div class="input-group">
-                 <input type="text" class="form-control" placeholder="Search" name="q" data-bind="textInput: searchItem, valueUpdate: 'afterkeydown'">
+                 <input type="text" class="form-control" placeholder="Search" data-bind="textInput: searchRestaurant, valueUpdate: 'afterkeydown'">
                  <div class="input-group-btn">
-                     <button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                     <button class="btn btn-default"><i class="glyphicon glyphicon-filter"></i></button>
                  </div>
              </div>
          </form>
@@ -37,31 +39,19 @@
 
          <aside class="col-md-3 col-md-offset-9 collapsed in" id="navbarSupportedContent">
              <div class="sidenav">
-                 <div class="list-group" data-bind="foreach: locationList">
+                 <!--<div class="list-group" data-bind="foreach: locationList">
                      <a href="#" class="list-group-item list-group-item-action" data-bind="text: title, click: show"></a>
-                 </div>
+                 </div>-->
              </div>
          </aside>
      </div>
- </main>-->
+ </main>
 
-
-
-
- <div class="container">
-     <div class="options-box">
-         <h1>Find Your New NYC Home</h1>
-         <div>
-             <input id="show-listings" type="button" value="show Listings">
-             <input id="hide-listings" type="button" value="hide Listings">
-         </div>
-     </div>
-     <div id="map"></div>
- </div>
-
+ <script src="js/lib/knockout-3.4.2.js"></script>
+ <script src="js/locations.js"></script>
+ <script src="js/app.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyB6TPaaQjW3tKHl2WBR3m0s4ngxjrjq3zY&callback=initMap"
     async defer></script>
- <script src="js/locations.js"></script>
-   <script src="js/app.js"></script>
+
  </body>
 </html>
