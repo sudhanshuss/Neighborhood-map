@@ -1,5 +1,6 @@
 var map;
 var bounds;
+var largeInfowindow;
 function initMap(){
     ko.applyBindings(new ViewModel());
 }
@@ -7,7 +8,7 @@ function initMap(){
 var ViewModel = function(){
 
     var self = this;
-    var largeInfowindow = new google.maps.InfoWindow();
+    largeInfowindow = new google.maps.InfoWindow();
     bounds = new google.maps.LatLngBounds();
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 40.7413549, lng: -73.9980244},
@@ -56,7 +57,29 @@ var RestaurantMarker = function(data){
         animation: google.maps.Animation.DROP,
         icon: defaultIcon
     });
+
+    // Create an onclick even to open an indowindow at each marker
+    this.marker.addListener('click', function() {
+        populateInfoWindow(this, largeInfowindow);
+
+    });
 }
+
+    // This function populates the infowindow when the marker is clicked. We'll only allow
+    // one infowindow which will open at the marker that is clicked, and populate based
+    // on that markers position.
+    function populateInfoWindow(marker, infowindow) {
+    // Check to make sure the infowindow is not already opened on this marker.
+        if (infowindow.marker != marker) {
+            infowindow.marker = marker;
+             infowindow.setContent('<div>' + marker.title + '</div>');
+             infowindow.open(map, marker);
+             // Make sure the marker property is cleared if the infowindow is closed.
+              infowindow.addListener('closeclick',function(){
+                  infowindow.setMarker = null;
+                       });
+                       }
+               }
 
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
