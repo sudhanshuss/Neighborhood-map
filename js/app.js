@@ -34,6 +34,7 @@ var ViewModel = function(){
             });
         }
     }, this);
+
 }
 
 var RestaurantMarker = function(data){
@@ -57,6 +58,17 @@ var RestaurantMarker = function(data){
     this.marker.addListener('click', function() {
         populateInfoWindow(this, largeInfowindow);
     });
+
+    // creates bounce effect when item selected
+    this.bounce = function(place) {
+        google.maps.event.trigger(self.marker, 'click');
+    };
+
+
+    // show item info when selected from list
+    this.locationMarkerInfo = function(location) {
+        google.maps.event.trigger(self.marker, 'click');
+    };
 }
 
     // This function populates the infowindow when the marker is clicked. We'll only allow

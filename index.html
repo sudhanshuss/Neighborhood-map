@@ -33,19 +33,19 @@
      </div>
  </nav>
 
- <main class="container-fluid">
+
      <div class="row">
          <div id="map"></div>
 
          <aside class="col-md-3" id="navbarSupportedContent">
              <div class="sidenav">
                  <div class="list-group" data-bind="foreach: restaurantLocationList">
-                     <a href="#" class="list-group-item list-group-item-action" data-bind="text: title"></a>
+                     <a href="#" class="list-group-item list-group-item-action" data-bind="text: title, click: locationMarkerInfo"></a>
                  </div>
              </div>
          </aside>
      </div>
- </main>
+
 
  <script src="js/lib/knockout-3.4.2.js"></script>
  <script src="js/locations.js"></script>
