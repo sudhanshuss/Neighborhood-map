@@ -24,21 +24,16 @@ var ViewModel = function(){
     });
 
     // locations viewed on map
-    this.locationList = ko.computed(function() {
-        var searchFilter = self.searchRestaurant().toLowerCase();
-        if (searchFilter) {
+    this.restaurantLocationList = ko.computed(function() {
+        var searchRestaurantFilter = self.searchRestaurant().toLowerCase();
+        if(!searchRestaurantFilter){
+            return self.restaurantMapList();
+        }else{
             return ko.utils.arrayFilter(self.restaurantMapList(), function(location) {
-                var str = location.title.toLowerCase();
-                var result = str.includes(searchFilter);
-                location.visible(result);
-                return result;
+                return location.title.toLowerCase().includes(searchRestaurantFilter)
             });
         }
-        self.restaurantMapList().forEach(function(location) {
-            location.visible(true);
-        });
-        return self.restaurantMapList();
-    }, self);
+    }, this);
 }
 
 var RestaurantMarker = function(data){
@@ -61,7 +56,6 @@ var RestaurantMarker = function(data){
     // Create an onclick even to open an indowindow at each marker
     this.marker.addListener('click', function() {
         populateInfoWindow(this, largeInfowindow);
-
     });
 }
 
