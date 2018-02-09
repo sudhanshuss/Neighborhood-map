@@ -5,13 +5,16 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .container {
     height: 100%;
     position: relative;
 }
+
 input {
     font-size: 12px;
 }
+
 h1 {
     color: #525454;
     font-size: 22px;
@@ -20,7 +23,7 @@ h1 {
 }
 
 #map {
-    bottom:0px;
+    bottom: 0px;
     height: 100%;
     left: 0px;
     position: absolute;
