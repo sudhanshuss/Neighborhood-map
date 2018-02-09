@@ -12,7 +12,7 @@ var ViewModel = function(){
     bounds = new google.maps.LatLngBounds();
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 40.7413549, lng: -73.9980244},
-        zoom: 13,
+        zoom: 12,
         mapTypeControl: false
     });
 
@@ -56,6 +56,7 @@ var RestaurantMarker = function(data){
 
     // Create an onclick even to open an indowindow at each marker
     this.marker.addListener('click', function() {
+        toggleBounce(this);
         populateInfoWindow(this, largeInfowindow);
     });
 
@@ -132,4 +133,12 @@ function makeMarkerIcon(markerColor) {
         new google.maps.Point(10, 34),
         new google.maps.Size(21, 34));
     return markerImage;
+}
+
+function toggleBounce(marker) {
+    if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
 }
