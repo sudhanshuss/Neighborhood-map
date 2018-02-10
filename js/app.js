@@ -2,6 +2,7 @@ var map;
 var bounds;
 var largeInfowindow;
 
+//callback function for googleapis
 function initMap() {
     ko.applyBindings(new ViewModel());
 }
@@ -24,14 +25,16 @@ var ViewModel = function () {
         self.restaurantMapList.push(new RestaurantMarker(location))
     });
 
-    // locations viewed on map
+    // restaurantLocationList viewed on map
     this.restaurantLocationList = ko.computed(function () {
         var searchRestaurantFilter = self.searchRestaurant().toLowerCase();
         if (!searchRestaurantFilter) {
             return self.restaurantMapList();
         } else {
             return ko.utils.arrayFilter(self.restaurantMapList(), function (location) {
-                return location.title.toLowerCase().includes(searchRestaurantFilter)
+                var match = location.title.toLowerCase().includes(searchRestaurantFilter);
+                    location.visible(match);
+                    return match;
             });
         }
     }, this);
@@ -54,8 +57,16 @@ var RestaurantMarker = function (data) {
         animation: google.maps.Animation.DROP,
         icon: defaultIcon
     });
+    //The below logic show/hide marker on map based on search filter.
+    self.markersFilter = ko.computed(function () {
+        if(self.visible()) {
+             self.marker.setMap(map);
+        } else {
+            self.marker.setMap(null);
+        }
+    });
 
-    // Create an onclick even to open an indowindow at each marker
+    // Create an onclick even to open an infowindow at each marker with bounce feature
     this.marker.addListener('click', function () {
         toggleBounce(this);
         populateInfoWindow(this, largeInfowindow);
