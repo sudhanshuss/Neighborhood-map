@@ -13,10 +13,10 @@
 <div class="container-fluid">
     <nav class="navbar navbar-default">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-3">
                 <div class="navbar-header">
                     <div class="navbar-brand">
-                        <div class="nav-title">Fav Restaurants</div>
+                        <div class="nav-title navbar-right">Favouriteasdfffffffffffffff Restaurants</div>
                     </div>
                 </div>
             </div>
@@ -28,12 +28,13 @@
                 <div class="input-group-btn">
                     <button class="btn btn-default"><i class="glyphicon glyphicon-filter"></i></button>
                 </div>
+               <!-- <div id="wikipedia-links">Type in an address above and find relevant Wikipedia articles here!</div>-->
             </div>
         </form>
     </nav>
     <div class="row">
         <div id="map"></div>
-        <aside class="col-md-3" id="navbarSupportedContent">
+        <aside class="col-xs-3">
             <div class="sidenav">
                 <div class="list-group" data-bind="foreach: restaurantLocationList">
                     <a href="#" class="list-group-item list-group-item-action"
@@ -41,6 +42,18 @@
                 </div>
             </div>
         </aside>
+    </div>
+    <div class="row">
+        <aside class="col-md-3">
+            <div class="sidenav">
+                <div>TEST</div>
+                <div class="list-group" data-bind="foreach: wikiLinks">
+                    <a href="#" class="list-group-item list-group-item-action"
+                       data-bind="text: articleText"></a>
+                </div>
+            </div>
+        </aside>
+    </div>
     </div>
 </div>
 

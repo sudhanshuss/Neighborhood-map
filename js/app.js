@@ -20,6 +20,7 @@ var ViewModel = function () {
 
     this.searchRestaurant = ko.observable('');
     this.restaurantMapList = ko.observableArray([]);
+    this.wikiListArray = ko.observableArray([]);
 
     locations.forEach(function (location) {
         self.restaurantMapList.push(new RestaurantMarker(location))
@@ -39,8 +40,37 @@ var ViewModel = function () {
         }
     }, this);
 
+    // wikiList viewed on map
+    this.wikiLinks = ko.computed(function () {
+        // load wikipedia data
+        var cityStr= "bothell";
+        var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + cityStr + '&format=json&callback=wikiCallback';
+        var wikiRequestTimeout = setTimeout(function(){
+            //$wikiElem.text("failed to get wikipedia resources");
+        }, 8000);
+
+        $.ajax({
+            url: wikiUrl,
+            dataType: "jsonp",
+            jsonp: "callback",
+            success: function( response ) {
+                var articleList = response[1];
+                articleList.forEach(function (article) {
+                    self.wikiListArray.push(new wikiObj(article));
+                });
+                return self.wikiListArray();
+              //  clearTimeout(wikiRequestTimeout);
+            }
+        });
+    }, this);
 }
 
+var wikiObj = function (data) {
+    var self = this;
+    this.articleText =  data;
+    this.url =  'http://en.wikipedia.org/wiki/' + data;
+
+}
 var RestaurantMarker = function (data) {
     var self = this;
     this.title = data.title;
@@ -153,3 +183,6 @@ function toggleBounce(marker) {
         marker.setAnimation(google.maps.Animation.BOUNCE);
     }
 }
+
+
+
