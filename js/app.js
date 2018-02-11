@@ -23,7 +23,7 @@ var ViewModel = function () {
     this.wikiListArray = ko.observableArray([]);
 
     locations.forEach(function (location) {
-        self.restaurantMapList.push(new RestaurantMarker(location))
+        self.restaurantMapList.push(new RestaurantMarker(location));
     });
 
     // restaurantLocationList viewed on map
@@ -63,14 +63,14 @@ var ViewModel = function () {
             }
         });
     }, this);
-}
+};
 
 var wikiObj = function (data) {
     var self = this;
     this.articleText =  'wiki link- '+ data;
     this.url =  'http://en.wikipedia.org/wiki/' + data;
 
-}
+};
 var RestaurantMarker = function (data) {
     var self = this;
     this.title = data.title;
@@ -112,7 +112,7 @@ var RestaurantMarker = function (data) {
     this.locationMarkerInfo = function (location) {
         google.maps.event.trigger(self.marker, 'click');
     };
-}
+};
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
@@ -135,7 +135,7 @@ function populateInfoWindow(marker, infowindow) {
         // In case the status is OK, which means the pano was found, compute the
         // position of the streetview image, then calculate the heading, then get a
         // panorama from that and set the options
-        function getStreetView(data, status) {
+        var getStreetView = function (data, status) {
             if (status == google.maps.StreetViewStatus.OK) {
                 var nearStreetViewLocation = data.location.latLng;
                 var heading = google.maps.geometry.spherical.computeHeading(
@@ -153,7 +153,7 @@ function populateInfoWindow(marker, infowindow) {
             } else {
                 infowindow.setContent('<div>' + marker.title + '</div>' + '<div style="color: red">No Street View Found</div>');
             }
-        };
+        }
         // Use streetview service to get the closest streetview image within
         // 50 meters of the markers position
         streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
