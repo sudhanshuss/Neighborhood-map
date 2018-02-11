@@ -33,49 +33,22 @@ var ViewModel = function () {
         } else {
             return ko.utils.arrayFilter(self.restaurantMapList(), function (location) {
                 var match = location.title.toLowerCase().includes(searchRestaurantFilter);
-                    location.visible(match);
-                    return match;
+                location.visible(match);
+                return match;
             });
         }
     }, this);
-
-    // wikiList viewed on map
-    this.wikiLinks = ko.computed(function () {
-        // load wikipedia data
-        var cityStr= "bothell-everett highway";
-        var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + cityStr + '&format=json&callback=wikiCallback';
-        var wikiRequestTimeout = setTimeout(function(){
-            //$wikiElem.text("failed to get wikipedia resources");
-        }, 8000);
-
-        $.ajax({
-            url: wikiUrl,
-            dataType: "jsonp",
-            jsonp: "callback",
-            success: function( response ) {
-                var articleList = response[1];
-                articleList.forEach(function (article) {
-                    self.wikiListArray.push(new wikiObj(article));
-                });
-                return self.wikiListArray();
-              //  clearTimeout(wikiRequestTimeout);
-            }
-        });
-    }, this);
 };
 
-var wikiObj = function (data) {
-    var self = this;
-    this.articleText =  'wiki link- '+ data;
-    this.url =  'http://en.wikipedia.org/wiki/' + data;
-
-};
 var RestaurantMarker = function (data) {
     var self = this;
     this.title = data.title;
     this.position = data.location;
     // Style the markers a bit. This will be our listing marker icon.
     var defaultIcon = makeMarkerIcon('0091ff');
+    // Foursquare clientID and secret key
+    var clientSecret = 'BPD245ZOG4AYW20U10YBJRY0VIRWCC3NPGUDJ3CTBLPTSDRV';
+    var clientID = 'PVHG02V5ZQPQBQTDFUP03IYRV3401OPM32FZVIHZIVZVUSFF';
     this.visible = ko.observable(true);
 
     // Create a marker per location, and put into markers array
@@ -88,16 +61,26 @@ var RestaurantMarker = function (data) {
     });
 
     self.markersFilter = ko.computed(function () {
-        if(self.visible()) {
-             self.marker.setMap(map);
+        if (self.visible()) {
+            self.marker.setMap(map);
         } else {
             self.marker.setMap(null);
         }
     });
 
+
+    // get JSON request of foursquare data
+    var reqURL = 'https://api.foursquare.com/v2/venues/search?ll=' + this.position.lat + ',' + this.position.lng + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20170801' + '&query=' + this.title;
+
+    $.getJSON(reqURL).done(function (data) {
+      self.venueDetail =new VenueDetail(data.response.venues[0]);
+    }).fail(function () {
+        alert('Something went wrong with foursquare');
+    });
+
     // Create an onclick even to open an infowindow at each marker with bounce feature
     this.marker.addListener('click', function () {
-        populateInfoWindow(this, largeInfowindow);
+        populateInfoWindow(this, self.venueDetail, largeInfowindow);
     });
 
     // creates bounce effect when item selected
@@ -112,17 +95,23 @@ var RestaurantMarker = function (data) {
     };
 };
 
+var VenueDetail = function (venue){
+    this.phone = venue.contact.formattedPhone ? venue.contact.formattedPhone : 'N/A';
+    this.street = venue.location.formattedAddress[0] ? venue.location.formattedAddress[0] : 'N/A';
+    this.city = venue.location.formattedAddress[1] ? venue.location.formattedAddress[1] : 'N/A';
+};
+
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
-function populateInfoWindow(marker, infowindow) {
+function populateInfoWindow(marker,venueDetail, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         // Clear the infowindow content to give the streetview time to load.
         infowindow.setContent('');
         infowindow.marker = marker;
         marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function() {
+        setTimeout(function () {
             marker.setAnimation(null);
         }, 1400);
 
@@ -133,7 +122,8 @@ function populateInfoWindow(marker, infowindow) {
         var streetViewService = new google.maps.StreetViewService();
         var radius = 50;
 
-
+        var windowContent = '<h4>' + marker.title + '</h4>' +
+            '<p>' + venueDetail.street + "<br>" + venueDetail.city + '<br>' + venueDetail.phone + "</p>";
         // In case the status is OK, which means the pano was found, compute the
         // position of the streetview image, then calculate the heading, then get a
         // panorama from that and set the options
@@ -142,7 +132,7 @@ function populateInfoWindow(marker, infowindow) {
                 var nearStreetViewLocation = data.location.latLng;
                 var heading = google.maps.geometry.spherical.computeHeading(
                     nearStreetViewLocation, marker.position);
-                infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
+                infowindow.setContent(windowContent + '<div>' + marker.title + '</div><div id="pano"></div>');
                 var panoramaOptions = {
                     position: nearStreetViewLocation,
                     pov: {
