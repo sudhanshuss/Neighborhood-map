@@ -13,8 +13,8 @@ var ViewModel = function () {
     largeInfowindow = new google.maps.InfoWindow();
     bounds = new google.maps.LatLngBounds();
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 40.7413549, lng: -73.9980244},
-        zoom: 12,
+        center: {lat: 47.76095, lng: -122.205588},
+        zoom: 11,
         mapTypeControl: false
     });
 
@@ -43,7 +43,7 @@ var ViewModel = function () {
     // wikiList viewed on map
     this.wikiLinks = ko.computed(function () {
         // load wikipedia data
-        var cityStr= "bothell";
+        var cityStr= "bothell-everett highway";
         var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + cityStr + '&format=json&callback=wikiCallback';
         var wikiRequestTimeout = setTimeout(function(){
             //$wikiElem.text("failed to get wikipedia resources");
@@ -67,7 +67,7 @@ var ViewModel = function () {
 
 var wikiObj = function (data) {
     var self = this;
-    this.articleText =  data;
+    this.articleText =  'wiki link- '+ data;
     this.url =  'http://en.wikipedia.org/wiki/' + data;
 
 }

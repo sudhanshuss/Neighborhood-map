@@ -16,7 +16,7 @@
             <div class="col-xs-3">
                 <div class="navbar-header">
                     <div class="navbar-brand">
-                        <div class="nav-title navbar-right">Favouriteasdfffffffffffffff Restaurants</div>
+                        <div class="nav-title navbar-right">Favourite Restaurants</div>
                     </div>
                 </div>
             </div>
@@ -44,15 +44,19 @@
         </aside>
     </div>
     <div class="row">
-        <aside class="col-md-3">
+        <div class="col-xs-3 wikiInfo">
             <div class="sidenav">
-                <div>TEST</div>
-                <div class="list-group" data-bind="foreach: wikiLinks">
-                    <a href="#" class="list-group-item list-group-item-action"
-                       data-bind="text: articleText"></a>
+                <div class="list-group" data-bind="foreach: wikiListArray">
+                  <!--  <a href="#" class="list-group-item list-group-item-action"
+                       data-bind="text: articleText, attr: { href: url }"></a>-->
+                    <a href="#" class="href" target="_blank" data-bind="text: articleText, attr: { href: url }">
+                       <!-- <img id="wiki-img"
+                             src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1122px-Wikipedia-logo-v2.svg.png"
+                             alt="wiki image" >-->
+                    </a>
                 </div>
             </div>
-        </aside>
+        </div>
     </div>
     </div>
 </div>

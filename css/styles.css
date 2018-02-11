@@ -34,3 +34,12 @@ h1 {
     width: 200px;
     height: 200px;
 }
+
+#wiki-img {
+    height: 35px;
+    width: 35px;
+}
+
+.wikiInfo {
+    background-color: white;
+}

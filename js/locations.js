@@ -1,10 +1,9 @@
-// These are the real estate listings that will be shown to the user.
-// Normally we'd have these in a database instead.
+
 var locations = [
-    {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
-    {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-    {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
-    {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-    {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
-    {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
+    {title: 'Bone Fish Restaurant', location: {lat: 47.793294, lng: -122.21603}},
+    {title: 'Pen Thai Restaurant', location: {lat: 47.759906, lng: -122.205026}},
+    {title: 'Azul', location: {lat: 47.86081, lng: -122.220858}},
+    {title: '85C Bakery Cafe', location: {lat: 47.829255, lng: -122.278189}},
+    {title: 'Mediterranean Kitchen', location: {lat: 47.831467, lng: -122.276775}}
+
 ];
