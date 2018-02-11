@@ -184,5 +184,10 @@ function toggleBounce(marker) {
     }
 }
 
+// handle map error
+function mapError() {
+    alert('An error occurred while loading Google Maps!');
+}
+
 
 
