@@ -11,7 +11,6 @@ This is a single page application featuring a neighborhood-map of favourite rest
   - CSS3
   - HTML5
 # Getting Started
-  - Download or clone the project 
-        ``git clone https://github.com/sudhanshuss/neighborhood-map.git``
-   - open index.html
+  - Download or clone the project.
+  - open index.html.
   
