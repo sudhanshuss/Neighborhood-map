@@ -4,12 +4,6 @@ var largeInfowindow;
 
 //callback function for googleapis
 function initMap() {
-    ko.applyBindings(new ViewModel());
-}
-
-var ViewModel = function () {
-
-    var self = this;
     largeInfowindow = new google.maps.InfoWindow();
     bounds = new google.maps.LatLngBounds();
     map = new google.maps.Map(document.getElementById('map'), {
@@ -17,7 +11,12 @@ var ViewModel = function () {
         zoom: 11,
         mapTypeControl: false
     });
+    ko.applyBindings(new ViewModel());
+}
 
+var ViewModel = function () {
+
+    var self = this;
     this.searchRestaurant = ko.observable('');
     this.restaurantMapList = ko.observableArray([]);
     this.wikiListArray = ko.observableArray([]);
@@ -87,7 +86,7 @@ var RestaurantMarker = function (data) {
         animation: google.maps.Animation.DROP,
         icon: defaultIcon
     });
-    //The below logic show/hide marker on map based on search filter.
+
     self.markersFilter = ko.computed(function () {
         if(self.visible()) {
              self.marker.setMap(map);
@@ -98,7 +97,6 @@ var RestaurantMarker = function (data) {
 
     // Create an onclick even to open an infowindow at each marker with bounce feature
     this.marker.addListener('click', function () {
-        toggleBounce(this);
         populateInfoWindow(this, largeInfowindow);
     });
 
@@ -123,6 +121,10 @@ function populateInfoWindow(marker, infowindow) {
         // Clear the infowindow content to give the streetview time to load.
         infowindow.setContent('');
         infowindow.marker = marker;
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function() {
+            marker.setAnimation(null);
+        }, 1400);
 
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function () {
@@ -174,14 +176,6 @@ function makeMarkerIcon(markerColor) {
         new google.maps.Point(10, 34),
         new google.maps.Size(21, 34));
     return markerImage;
-}
-
-function toggleBounce(marker) {
-    if (marker.getAnimation() !== null) {
-        marker.setAnimation(null);
-    } else {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-    }
 }
 
 // handle map error
