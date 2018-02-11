@@ -1,45 +1,41 @@
-html,
-body {
-    font-family: Arial, sans-serif;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+.navbar {
+    border-radius: 0px;
+    margin-bottom: 0;
 }
 
-.container {
-    height: 100%;
-    position: relative;
-}
-
-input {
-    font-size: 12px;
-}
-
-h1 {
-    color: #525454;
-    font-size: 22px;
-    margin: 0 0 10px 0;
-    text-align: center;
+.nav-title {
+    font-size: 25px;
+    text-transform: uppercase;
+    color: white;
 }
 
 #map {
-    bottom: 0px;
-    height: 100%;
-    left: 0px;
+    margin: 0;
     position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
     right: 0px;
+    z-index: -4;
+}
+
+.sidenav {
+    margin: 0;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+}
+
+.list-group-item {
+    margin: 0;
+    color: black;
+    border-left: solid;
+    border-bottom: solid;
 }
 
 #pano {
     width: 200px;
     height: 200px;
-}
-
-#wiki-img {
-    height: 35px;
-    width: 35px;
-}
-
-.wikiInfo {
-    background-color: white;
 }
