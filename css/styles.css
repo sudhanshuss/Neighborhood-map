@@ -10,20 +10,13 @@
 }
 
 #map {
- /*   bottom:0px;
-    height: 100%;
-    left: 0px;
-    position: absolute;
-    right: 0px;
-    z-index: 1;*/
     margin: 0;
     position: absolute;
     left: 0px;
     top: 0px;
     bottom: 0px;
     right: 0px;
-    height: 100%;
-
+    z-index: -4;
 }
 
 .sidenav {
@@ -33,7 +26,6 @@
     top: 0px;
     bottom: 0px;
     right: 0px;
-    z-index : 1;
 }
 
 .list-group-item {
