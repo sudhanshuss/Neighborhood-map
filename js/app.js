@@ -7,7 +7,7 @@ function initMap() {
     largeInfowindow = new google.maps.InfoWindow();
     bounds = new google.maps.LatLngBounds();
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 47.76095, lng: -122.205588},
+        center: {lat: 47.86095, lng: -122.206588},
         zoom: 11,
         mapTypeControl: false
     });
@@ -19,7 +19,6 @@ var ViewModel = function () {
     var self = this;
     this.searchRestaurant = ko.observable('');
     this.restaurantMapList = ko.observableArray([]);
-    this.wikiListArray = ko.observableArray([]);
 
     locations.forEach(function (location) {
         self.restaurantMapList.push(new RestaurantMarker(location));
@@ -28,15 +27,18 @@ var ViewModel = function () {
     // restaurantLocationList viewed on map
     this.restaurantLocationList = ko.computed(function () {
         var searchRestaurantFilter = self.searchRestaurant().toLowerCase();
-        if (!searchRestaurantFilter) {
-            return self.restaurantMapList();
-        } else {
-            return ko.utils.arrayFilter(self.restaurantMapList(), function (location) {
-                var match = location.title.toLowerCase().includes(searchRestaurantFilter);
-                location.visible(match);
-                return match;
+        if (searchRestaurantFilter) {
+            return ko.utils.arrayFilter(self.restaurantMapList(), function(location) {
+                var str = location.title.toLowerCase();
+                var result = str.includes(searchRestaurantFilter);
+                location.visible(result);
+                return result;
             });
         }
+        self.restaurantMapList().forEach(function(location) {
+            location.visible(true);
+        });
+        return self.restaurantMapList();
     }, this);
 };
 
@@ -132,7 +134,7 @@ function populateInfoWindow(marker,venueDetail, infowindow) {
                 var nearStreetViewLocation = data.location.latLng;
                 var heading = google.maps.geometry.spherical.computeHeading(
                     nearStreetViewLocation, marker.position);
-                infowindow.setContent(windowContent + '<div>' + marker.title + '</div><div id="pano"></div>');
+                infowindow.setContent(windowContent + '<div></div><div id="pano"></div>');
                 var panoramaOptions = {
                     position: nearStreetViewLocation,
                     pov: {
